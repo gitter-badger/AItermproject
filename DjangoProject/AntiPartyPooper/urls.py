@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^polls/', include('antipartypooperapp.urls',namespace="antipartypooperapp")),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'AntiPartyPooper.views.index',name="index"),
 )
