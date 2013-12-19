@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from polls.models import Activity, Poll
+from polls.models import *
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'

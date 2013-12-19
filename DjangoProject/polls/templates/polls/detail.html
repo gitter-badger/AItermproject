@@ -1,12 +1,21 @@
-<h1>{{ poll.title }}</h1>
+{% extends "base.html" %}
+{% block title %}{{ poll.title }}{% endblock %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block jumbotron-top %}
+    <h1>{{ poll.title }}</h1>
+    <p>{{ poll.comment }}</p>
+{% endblock jumbotron-top %}
 
-<form action="{% url 'polls:vote' poll.id %}" method="post">
-{% csrf_token %}
-{% for Activity in poll.Activity_set.all %}
-    <input type="radio" name="Activity" id="Activity{{ forloop.counter }}" value="{{ Activity.id }}" />
-    <label for="Activity{{ forloop.counter }}">{{ Activity.Activity_text }}</label><br />
-{% endfor %}
-<input type="submit" value="Vote" />
-</form>
+{% block jumbotron-maincontainer %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <div class="row">
+    {% for Activity in poll.activity_set.all %}
+        <div class="col-md-4">
+          <h2>{{Activity.title}}</h2>
+          <p>{{ Activity.description}}</p>
+          <p><a class="btn btn-default" href="#" role="button">Vote</a></p>
+        </div>
+    {% endfor %}
+
+    </div>
+{% endblock jumbotron-maincontainer %}

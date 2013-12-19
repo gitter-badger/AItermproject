@@ -23,6 +23,7 @@ class DayInline(admin.StackedInline):
     model = Day
     extra = 1
 
+
 class ActivityAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['title','poll']}),

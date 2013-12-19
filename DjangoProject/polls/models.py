@@ -28,7 +28,7 @@ class Day(models.Model):
 
 class Vote(models.Model):
     user = models.ForeignKey(User)
-    activity = models.ForeignKey(Activity)
+    #activity = models.ForeignKey(Activity)
     preference_value = models.IntegerField(default=0)
     comment = models.CharField(max_length=2000)
     day = models.ForeignKey(Day)
