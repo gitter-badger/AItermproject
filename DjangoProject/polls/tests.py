@@ -3,7 +3,7 @@ import datetime
 from django.utils import timezone
 from django.test import TestCase
 
-from antipartypooperapp.models import Poll
+from polls.models import Poll
 
 class PollMethodTests(TestCase):
 

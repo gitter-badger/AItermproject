@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from antipartypooperapp.models import Choice, Poll
+from polls.models import Choice, Poll
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -44,4 +44,4 @@ def vote(request, poll_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('antipartypooperapp:results', args=(p.id,)))
+        return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
