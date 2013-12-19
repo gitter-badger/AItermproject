@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from polls.models import Choice, Poll
+from polls.models import Activity, Poll
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -31,16 +31,16 @@ class ResultsView(generic.DetailView):
 def vote(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)
     try:
-        selected_choice = p.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
+        selected_Activity = p.Activity_set.get(pk=request.POST['Activity'])
+    except (KeyError, Activity.DoesNotExist):
         # Redisplay the poll voting form.
         return render(request, 'polls/detail.html', {
             'poll': p,
-            'error_message': "You didn't select a choice.",
+            'error_message': "You didn't select a Activity.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        selected_Activity.votes += 1
+        selected_Activity.save()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.

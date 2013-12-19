@@ -1,8 +1,8 @@
-<h1>{{ poll.question }}</h1>
+<h1>{{ poll.title }}</h1>
 
 <ul>
-{% for choice in poll.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% for Activity in poll.Activity_set.all %}
+    <li>{{ Activity.Activity_text }} -- {{ Activity.votes }} vote{{ Activity.votes|pluralize }}</li>
 {% endfor %}
 </ul>
 

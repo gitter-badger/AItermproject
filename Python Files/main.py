@@ -31,14 +31,14 @@ validUserIDSearch_re = re.compile(r'\w{0,16}\Z')
 		#self.users[userID] = """
 
 class User:
-	#need to 
+	#need to
 	"""
 	User Class
 
 	attributes
 		-userID is unique ID for each instance a User
 		-eventIDs is a dict mapping each eventID for which the user has been invited to they corresponding is the duration of each time interval for which to check availability
-		-schedule is 
+		-schedule is
 		-pastSuggestions is a dict mapping all suggestions a user has suggested in the past to the number of times they have suggested each activity
 
 	methods
@@ -103,7 +103,7 @@ class User:
 
 	#methods as user
 	def hostEvent(self, event):
-		
+
 		eventID = uuid.uuid4()
 		while eventID in eventIDs:
 			eventID = uuid.uuid4()
@@ -167,10 +167,10 @@ class Event:
 		-eventID
 		-eventName
 		-hostIDs dict mapping id to host value. If value is 1, they are original host, o/w it is 2.
-		-guestList 
-		-activitiesOffered 
-		-suggestedActivites 
-		-schedule 
+		-guestList
+		-activitiesOffered
+		-suggestedActivites
+		-schedule
 
 	methods
 	"""
@@ -181,7 +181,7 @@ class Event:
 		self.activitiesOffered = []
 		self.suggestedActivites = {}
 		self.schedule = Schedule(schedule_slots, frequency, clock)
-		#self.suggestedScheduleAdditions = 
+		#self.suggestedScheduleAdditions =
 #gets
 
 	def getEventName(self):
@@ -189,13 +189,13 @@ class Event:
 
 	def getGuestList(self):
 		return self.guestList
-	
+
 	def getHostID(self):
 		return self.hostID
-	
+
 	def getActivitiesOffered(self):
 		return self.activitiesOffered
-	
+
 	def getSuggestedActivities(self):
 		return self.suggestedActivites
 
@@ -204,8 +204,8 @@ class Event:
 
 	def addSuggestedActivity(self, activity):
 		if activity.getActivityID in self.suggestedActivites:
-			
-		
+
+
 	def authorizeHost(self, user):
 		if user.getUserID in self.hostID
 		return
@@ -226,7 +226,7 @@ class Host(User):
 		self.fullName= fullName
 		self.user_suggestions = {}
 		self.deadline = getDeadline()
-		# self.preference_type = 
+		# self.preference_type =
 		self.allowsMaybe = false
 
 	def authorizeHost(self, ID):
@@ -245,7 +245,7 @@ class Schedule:
 	attributes
 		-schedule is a dictionary corresponding to each day's proposed start and stop times {date:[(timeStart, timeEnd)]}
 		-frequency is the duration of each time interval for which to check availability
-		-schedule is 
+		-schedule is
 
 	"""
 	def __init__(self, schedule_slots, frequency=60, clock=12):
@@ -394,18 +394,18 @@ def askIfAvailable(date, time):
 	return userID_info"""
 
 def displayMainMenu():
-	#returns a main menu choice option as an int
-	choiceMatch = None
-	while not choiceMatch:
+	#returns a main menu Activity option as an int
+	ActivityMatch = None
+	while not ActivityMatch:
 		print "\n\n\nDISPLAYING MAIN MENU\nWhat would you like to do"
 		print "\t (1) Create a user?"
 		print "\t (2) Search/See a list of user IDs?"
 		print "\t (3) Login as a user?"
 		print "\t (4) Import a dataset?"
 		print "\t (5) Exit"
-		choice = raw_input('Selection: ')
-		choiceMatch = re.match(r'([12345]|(exit))\Z', choice.lower())
-	return int(choice)
+		Activity = raw_input('Selection: ')
+		ActivityMatch = re.match(r'([12345]|(exit))\Z', Activity.lower())
+	return int(Activity)
 
 def displayMenu(menuSelection):
 	backToMainMenuMsg = 'If you wish to return to the main menu, enter \"return!\"'
@@ -434,7 +434,7 @@ def displayMenu(menuSelection):
 			elif enteredID in userIDs:
 				print enteredID, alreadyExistsMsg
 			else:
-				print invalidInputMsg, enteredID 
+				print invalidInputMsg, enteredID
 		return
 
 	#Search/See User ID Menu
@@ -480,7 +480,7 @@ def displayMenu(menuSelection):
 			elif validIDMatchObj:
 				print enteredID, doesNotExistsMsg
 			else:
-				print invalidInputMsg, enteredID 
+				print invalidInputMsg, enteredID
 		return
 
 def displayLoggedInMenu(enteredID):
