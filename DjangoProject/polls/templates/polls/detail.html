@@ -9,13 +9,24 @@
 {% block jumbotron-maincontainer %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <div class="row">
-    {% for Activity in poll.activity_set.all %}
+    {% for activity in poll.activity_set.all %}
         <div class="col-md-4">
-          <h2>{{Activity.title}}</h2>
-          <p>{{ Activity.description}}</p>
-          <p><a class="btn btn-default" href="#" role="button">Vote</a></p>
+          <h2>{{activity.title}}</h2>
+          <p>{{ activity.description}}</p>
+          <h4>Proposed days:</h4>
+          <form action="{% url 'polls:vote' poll.id %}" method="post">
+          {% csrf_token %}
+          <label>I'll go</label>
+          <label>Won't go</label>
+          <label>Haven't decided</label>
+          {% for day in activity.day_set.all %}
+            <label>{{ day.day}}</label>
+            <input type="radio" name="day{{ forloop.counter }}" id="T{{day.id}}" value="True" />
+            <input type="radio" name="day{{ forloop.counter }}" id="F{{day.id}}" value="False" />
+            <input type="radio" name="day{{ forloop.counter }}" id="N{{day.id}}" value="None" checked="checked"/>
+          {% endfor %}
+          <input class="btn btn-default" type="submit" value="Vote" />
         </div>
     {% endfor %}
-
     </div>
 {% endblock jumbotron-maincontainer %}

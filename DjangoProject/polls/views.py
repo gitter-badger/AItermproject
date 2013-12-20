@@ -8,16 +8,13 @@ from polls.models import *
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
-    context_object_name = 'latest_poll_list'
+    context_object_name = 'all_poll_list'
 
     def get_queryset(self):
         """
-        Return the last five published polls (not including those set to be
-        published in the future).
+        Return all polls
         """
-        return Poll.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+        return Poll.objects.all().order_by('-pub_date')
 
 class DetailView(generic.DetailView):
     model = Poll
@@ -27,6 +24,7 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Poll
     template_name = 'polls/results.html'
+
 
 def vote(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)

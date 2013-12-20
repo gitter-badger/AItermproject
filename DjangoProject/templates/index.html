@@ -6,7 +6,9 @@
     <h1>Don't poop my party</h1>
     <p>Tired of endless conversations when trying to make plans with your friends? Too many
         possibilities and impossible schedules? Try our best-plan finder!</p>
-    <p><a class="btn btn-primary btn-lg" role="button">Start a poll &raquo;</a></p>
+    <p>
+      <a class="btn btn-primary btn-lg" role="button" href="{% url 'admin:polls_poll_add' %}">Start a poll &raquo;</a>
+    </p>
 {% endblock jumbotron-top %}
 
 {% block jumbotron-maincontainer %}
