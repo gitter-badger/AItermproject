@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Current events{% endblock %}
+
+{% block jumbotron-top %}
+    <h1>Current events</h1>
+    <p>List of all the current events in the system</p>
+{% endblock jumbotron-top %}
+
+
+{% block jumbotron-maincontainer %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <div class="row">
+        {% if all_event_list %}
+            {% for event in all_event_list %}
+                <div class="col-md-4">
+                    <h2>{{event.title}}</h2>
+                    <p>{{ event.comment}}</p>
+                    <a href="{% url 'events:detail' event.id %}">View this event</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No events are available.</p>
+        {% endif %}
+    </div>
+{% endblock jumbotron-maincontainer %}

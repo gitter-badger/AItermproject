@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
-class Poll(models.Model):
+class Event(models.Model):
     #host = models.ForeignKey(User)
     title = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
@@ -13,7 +13,7 @@ class Poll(models.Model):
         return self.title
 
 class Activity(models.Model):
-    poll = models.ForeignKey(Poll)
+    event = models.ForeignKey(Event)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=2000)
     time_duration_hours = models.IntegerField(default=1)

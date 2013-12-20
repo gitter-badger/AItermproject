@@ -1,9 +1,0 @@
-<h1>{{ poll.title }}</h1>
-
-<ul>
-{% for Activity in poll.Activity_set.all %}
-    <li>{{ Activity.Activity_text }} -- {{ Activity.votes }} vote{{ Activity.votes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'polls:detail' poll.id %}">Vote again?</a>

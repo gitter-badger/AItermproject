@@ -4,36 +4,36 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from polls.models import *
+from events.models import *
 
 class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'all_poll_list'
+    template_name = 'events/index.html'
+    context_object_name = 'all_event_list'
 
     def get_queryset(self):
         """
-        Return all polls
+        Return all events
         """
-        return Poll.objects.all().order_by('-pub_date')
+        return Event.objects.all().order_by('-pub_date')
 
 class DetailView(generic.DetailView):
-    model = Poll
-    template_name = 'polls/detail.html'
+    model = Event
+    template_name = 'events/detail.html'
 
 
 class ResultsView(generic.DetailView):
-    model = Poll
-    template_name = 'polls/results.html'
+    model = Event
+    template_name = 'events/results.html'
 
 
-def vote(request, poll_id):
-    p = get_object_or_404(Poll, pk=poll_id)
+def vote(request, event_id):
+    p = get_object_or_404(Event, pk=event_id)
     try:
         selected_Activity = p.Activity_set.get(pk=request.POST['Activity'])
     except (KeyError, Activity.DoesNotExist):
-        # Redisplay the poll voting form.
-        return render(request, 'polls/detail.html', {
-            'poll': p,
+        # Redisplay the event voting form.
+        return render(request, 'events/detail.html', {
+            'event': p,
             'error_message': "You didn't select a Activity.",
         })
     else:
@@ -42,4 +42,4 @@ def vote(request, poll_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+        return HttpResponseRedirect(reverse('events:results', args=(p.id,)))

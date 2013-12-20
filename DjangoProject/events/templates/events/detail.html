@@ -1,20 +1,20 @@
 {% extends "base.html" %}
-{% block title %}{{ poll.title }}{% endblock %}
+{% block title %}{{ event.title }}{% endblock %}
 
 {% block jumbotron-top %}
-    <h1>{{ poll.title }}</h1>
-    <p>{{ poll.comment }}</p>
+    <h1>{{ event.title }}</h1>
+    <p>{{ event.comment }}</p>
 {% endblock jumbotron-top %}
 
 {% block jumbotron-maincontainer %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <div class="row">
-    {% for activity in poll.activity_set.all %}
+    {% for activity in event.activity_set.all %}
         <div class="col-md-4">
           <h2>{{activity.title}}</h2>
           <p>{{ activity.description}}</p>
           <h4>Proposed days:</h4>
-          <form action="{% url 'polls:vote' poll.id %}" method="post">
+          <form action="{% url 'events:vote' event.id %}" method="post">
           {% csrf_token %}
           <label>I'll go</label>
           <label>Won't go</label>
