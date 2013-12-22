@@ -1,11 +1,8 @@
-from django import forms
-
+from django.forms import Form,ModelForm
+from events.models import *
 VOTING_CHOICES = (('1', 'I\'ll go',), ('0', 'I won\'t go',),('-1', 'Haven\'t decided yet',))
-class VoteForm(forms.Form):
-    will_go = forms.ChoiceField(required=False,
-        widget=forms.RadioSelect,choices=VOTING_CHOICES)
 
-class MultiVoteForm(forms.Form):
+class MultiVoteForm(Form):
     def __init__(self, *args, **kwargs):
         if 'dynamic_fields' in kwargs:
             dynamic_fields = kwargs.pop('dynamic_fields') #before calling super or we have an error
@@ -20,3 +17,13 @@ class MultiVoteForm(forms.Form):
                 required=True,
                 initial=VOTING_CHOICES[2][0],
                 widget=forms.RadioSelect)
+
+class EventForm(ModelForm):
+   class Meta:
+        model = Event
+        fields = ['title', 'comment', 'deadline_date']
+
+class ActivityForm(ModelForm):
+    class Meta:
+        model = Activity
+        fields = ['title', 'description']

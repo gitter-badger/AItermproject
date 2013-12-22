@@ -50,9 +50,10 @@ class ActivityDetailView(generic.DetailView):
         return Activity.objects.all().filter(event=self.kwargs['pk_event'])'''
 
 
-class ResultsView(generic.DetailView):
+class EventCreate(generic.CreateView):
     model = Event
-    template_name = 'events/results.html'
+    template_name = 'events/create.html'
+    form_class = EventForm
 
 
 def vote(request, pk_event, pk_activity):

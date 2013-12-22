@@ -10,10 +10,10 @@ class EventAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['title']}),
         ('Comment',          {'fields': ['comment']}),
-        ('Date information', {'fields': ['pub_date','deadline_date'], 'classes': ['collapse']}),
+        ('Date information', {'fields': ['deadline_date'], 'classes': ['collapse']}),
 
     ]
-    list_display = ('title', 'comment' ,'pub_date', 'deadline_date')
+    list_display = ('title', 'comment', 'deadline_date')
     list_filter = ['pub_date']
     list_filter = ['deadline_date']
     search_fields = ['title']

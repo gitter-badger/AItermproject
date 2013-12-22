@@ -1,12 +1,9 @@
-import datetime
-from django.utils import timezone
 from django.db import models
-from django.contrib.auth.models import User
 
 class Event(models.Model):
     #host = models.ForeignKey(User)
     title = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    #pub_date = models.DateTimeField('date published')
     deadline_date =  models.DateTimeField('deadline to answer')
     comment = models.CharField(max_length=2000)
     def __unicode__(self):  # Python 3: def __str__(self):
