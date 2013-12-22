@@ -3,6 +3,7 @@ from django.views import generic
 
 from events.models import *
 from events.forms import *
+import pdb
 
 class IndexView(generic.ListView):
     template_name = 'events/index.html'
@@ -56,11 +57,16 @@ class ResultsView(generic.DetailView):
 
 def vote(request, pk_event, pk_activity):
     if request.method == 'POST': # If the form has been submitted...
-        form = MultiVoteForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            # ...
-            return redirect('events:detail',pk_event=pk_event) # Redirect after POST
+        #get all days for this activity
+        daylist = Day.objects.all().filter(activity=pk_activity)
+        for day in daylist:
+            vote_value = int(request.POST[str(day.id)])
+            #pdb.set_trace()
+            if (vote_value == 1) or (vote_value == 0):
+                vote = Vote(day=day,will_go=bool(vote_value))
+                vote.save()
+
+        return redirect('events:detail',pk_event=pk_event) # Redirect after POST
 
     return redirect('events:activitydetail', pk_event=pk_event, pk_activity=pk_activity)
 

@@ -1,6 +1,6 @@
 from django import forms
 
-VOTING_CHOICES = (('0', 'I\'ll go',), ('1', 'I won\'t go',))
+VOTING_CHOICES = (('1', 'I\'ll go',), ('0', 'I won\'t go',),('-1', 'Haven\'t decided yet',))
 class VoteForm(forms.Form):
     will_go = forms.MultipleChoiceField(required=False,
         widget=forms.RadioSelect,choices=VOTING_CHOICES)
@@ -17,5 +17,5 @@ class MultiVoteForm(forms.Form):
             self.fields[field['name']] = forms.MultipleChoiceField(
                 choices=VOTING_CHOICES,
                 label=field['label'],
-                required=False,
+                required=True,
                 widget=forms.RadioSelect)

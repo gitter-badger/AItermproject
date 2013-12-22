@@ -24,17 +24,17 @@ class Day(models.Model):
     activity = models.ForeignKey(Activity)
     day = models.DateTimeField('day')
     def __unicode__(self):  # Python 3: def __str__(self):
-        return "self.day.isoformat()"
+        return self.day.isoformat()
 
 class Vote(models.Model):
-    user = models.ForeignKey(User)
+    #user = models.ForeignKey(User)
     #activity = models.ForeignKey(Activity)
     #preference_value = models.IntegerField(default=1)
     will_go = models.BooleanField(default=True)
-    comment = models.CharField(max_length=2000)
+    #comment = models.CharField(max_length=2000)
     day = models.ForeignKey(Day)
     def __unicode__(self):  # Python 3: def __str__(self):
-        return self.comment
+        return str(self.will_go)
 
 
 
