@@ -65,7 +65,6 @@ def vote(request, pk_event, pk_activity):
             if (vote_value == 1) or (vote_value == 0):
                 vote = Vote(day=day,will_go=bool(vote_value))
                 vote.save()
-
         return redirect('events:detail',pk_event=pk_event) # Redirect after POST
 
     return redirect('events:activitydetail', pk_event=pk_event, pk_activity=pk_activity)
