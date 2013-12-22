@@ -1,9 +1,0 @@
-<h1>{{ event.title }}</h1>
-
-<ul>
-{% for Activity in event.Activity_set.all %}
-    <li>{{ Activity.Activity_text }} -- {{ Activity.votes }} vote{{ Activity.votes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'events:detail' event.id %}">Vote again?</a>
