@@ -10,7 +10,10 @@
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <div class="row">
         <form method="post" action="">
-            {{ form }}
+            {{ event_form }}
+            {% for aform in activity_forms %}
+                {{ aform }}
+            {% endfor %}
         </form>
     </div>
 {% endblock jumbotron-maincontainer %}

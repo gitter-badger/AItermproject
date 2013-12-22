@@ -50,8 +50,7 @@ class EventCreate(CreateView):
     template_name = 'events/create.html'
     form_class = EventForm
 
-def add_event(request):
-    if request.method == "POST":
+    def post(self, request, *args, **kwargs):
         eform = EventForm(request.POST, instance=Event())
         aforms = [ActivityForm(request.POST, prefix=str(x), instance=Activity()) for x in range(0,3)]
         if eform.is_valid() and all([af.is_valid() for af in aforms]):
@@ -61,8 +60,10 @@ def add_event(request):
                 new_activity.event = new_event
                 new_activity.save()
             return HttpResponseRedirect('/events/add/')
-    else:
+        return render_to_response('events/add_event.html', {'event_form': eform, 'activity_forms': aforms})
+    def get(self, request, *args, **kwargs):
         eform = EventForm(instance=Event())
         aforms = [ActivityForm(prefix=str(x), instance=Activity()) for x in range(0,3)]
-    return render_to_response('events/add_event.html', {'event_form': eform, 'activity_forms': aforms})
+        return render_to_response('events/add_event.html', {'event_form': eform, 'activity_forms': aforms})
+
 
