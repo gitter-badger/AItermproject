@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Create event{% endblock %}
+
+{% block jumbotron-top %}
+    <h1>Create event</h1>
+    <p>TODO: instructions</p>
+{% endblock jumbotron-top %}
+
+{% block jumbotron-maincontainer %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <div class="row">
+        <form method="post" action="">
+            {{ event_form }}
+            {% for aform in activity_forms %}
+                {{ aform }}
+            {% endfor %}
+        </form>
+    </div>
+{% endblock jumbotron-maincontainer %}

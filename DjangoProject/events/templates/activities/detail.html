@@ -9,7 +9,7 @@
 {% block jumbotron-maincontainer %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <div class="row">
-        <form action="{{request.path}}vote/" method="post">
+        <form action="{{request.path}}" method="post">
             {% csrf_token %}
             {% for field in voteform %}
                 <div class="fieldWrapper">
