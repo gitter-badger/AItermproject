@@ -1,5 +1,7 @@
 from django.forms import Form,ModelForm,ChoiceField,RadioSelect
 from events.models import *
+from events.widgets import *
+
 VOTING_CHOICES = (('1', 'I\'ll go',), ('0', 'I won\'t go',),('-1', 'Haven\'t decided yet',))
 
 class MultiVoteForm(Form):
@@ -16,7 +18,7 @@ class MultiVoteForm(Form):
                 label=field['label'],
                 required=True,
                 initial=VOTING_CHOICES[2][0],
-                widget=RadioSelect)
+                widget=RadioSelect(renderer=RadioCustomRenderer,attrs={'class': 'Your name',}))
 
 class EventForm(ModelForm):
    class Meta:

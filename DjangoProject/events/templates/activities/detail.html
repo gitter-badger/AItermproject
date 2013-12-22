@@ -9,15 +9,17 @@
 {% block jumbotron-maincontainer %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <div class="row">
-        <form action="{{request.path}}" method="post">
+        <form action="{{request.path}}" method="post" role="form">
             {% csrf_token %}
             {% for field in voteform %}
-                <div class="fieldWrapper">
-                    <label for="{{ field.id_for_label}}">{{ field.label}}</label>
-                    {{field}}
+                <div class="form-group">
+                   <h3> <label for="{{ field.id_for_label}}" class="checkbox-inline label label-primary ">{{ field.label}}</label></h3>
+                     <span class="input-group-addon">
+                        {{field}}
+                    </span>
                 </div>
             {% endfor %}
-            <p><input type="submit" value="Vote" /></p>
+            <p class="text-center"><input type="submit" value="Vote" class="btn btn-success btn-lg"/></p>
         </form>
     </div>
 {% endblock jumbotron-maincontainer %}
