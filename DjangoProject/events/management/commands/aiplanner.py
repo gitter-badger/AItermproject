@@ -29,9 +29,10 @@ class Command(BaseCommand):
             days[activity] = Day.objects.all().filter(activity=activity)
         votes = {}
         for day in days:
-            votes[day] = Votes.objects.all().filter(day=day)
+            votes[day] = Vote.objects.all().filter(day=day)
 
         #now we have all activities with its days and votes loaded
+        #code here
 
 
 
