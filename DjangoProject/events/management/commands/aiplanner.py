@@ -51,11 +51,6 @@ class Command(BaseCommand):
         print days[activities[0]][0].day in day_set
         '''
 
-<<<<<<< HEAD
-
-
-=======
         # test for app_csp_formulation
         
         formulate_app_csp(activities,days,votes)
->>>>>>> CSP

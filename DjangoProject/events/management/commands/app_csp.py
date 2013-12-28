@@ -19,13 +19,13 @@ def formulate_app_csp(activities,days,votes):
 		set_of_days = days[act] # is of type django.db.models.query.QuerySet
 		for day in set_of_days:
 			# day is of type models.Day, which has an attribute called 'day' which is a datetime
-			if day.day not in X_datetime_domain:
-				X_datetime_domain.add(day.day)
+			if day.dateAndTime not in X_datetime_domain:
+				X_datetime_domain.add(day.dateAndTime)
 
 	domains['X_datetime'] = list(X_datetime_domain)
 
 	# domain for X_attendees
-	domains['X_attendees'] = range(1000)
+	domains['X_attendees'] = range(100)
 
 
 	neighbors = {}
@@ -55,7 +55,7 @@ def formulate_app_csp(activities,days,votes):
 		# get the QuerySet object associated with activity
 		set_of_days = days[activity]
 		for day in set_of_days:
-			if datetime == day.day:
+			if datetime == day.dateAndTime:
 				return True
 		return False
 
@@ -68,17 +68,20 @@ def formulate_app_csp(activities,days,votes):
 			number_of_attendees = a
 		else:
 			return False
-		if number_of_attendees<activity.min_atendees:
+		if number_of_attendees<activity.min_attendees:
 			return False
-		if number_of_attendees>activity.max_atendees:
+		if number_of_attendees>activity.max_attendees:
 			return False
 		return True
 
 	app_csp = CSP(vars,domains,neighbors,constraints)
 
-	app_csp.curr_domain = 
+	print len(app_csp.domains['X_attendees'])
+
+	app_csp.curr_domains = domains
 	AC3(app_csp)
+	app_csp.curr_domain = None
 
-	print app_csp.domains
+	print len(app_csp.domains['X_attendees'])
 
-	#print min_conflicts(CSP(vars,domains,neighbors,constraints),1000)
+	print min_conflicts(CSP(vars,domains,neighbors,constraints),1000)
