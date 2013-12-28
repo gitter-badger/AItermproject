@@ -40,7 +40,7 @@ class ActivityDetailView(DetailView):
         for day in daylist:
             vote_value = int(request.POST[str(day.id)])
             if (vote_value == 1) or (vote_value == 0):
-                vote = Vote(day=day,will_go=bool(vote_value))
+                vote = Vote(day=day,will_go=bool(vote_value),user=self.request.user)
                 vote.save()
         return redirect('events:detail',pk_event=event_id) # Redirect after POST
 
@@ -60,10 +60,10 @@ class EventCreate(CreateView):
                 new_activity.event = new_event
                 new_activity.save()
             return HttpResponseRedirect('/events/add/')
-        return render_to_response('events/add_event.html', {'event_form': eform, 'activity_forms': aforms})
+        return render_to_response(self.template_name, {'event_form': eform, 'activity_forms': aforms})
     def get(self, request, *args, **kwargs):
         eform = EventForm(instance=Event())
         aforms = [ActivityForm(prefix=str(x), instance=Activity()) for x in range(0,3)]
-        return render_to_response('events/add_event.html', {'event_form': eform, 'activity_forms': aforms})
+        return render_to_response(self.template_name, {'event_form': eform, 'activity_forms': aforms})
 
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Event(models.Model):
     #host = models.ForeignKey(User)
@@ -14,6 +15,8 @@ class Activity(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=2000)
     time_duration_hours = models.IntegerField(default=1)
+    min_atendees = models.IntegerField(default=0)
+    max_atendees = models.IntegerField(default=99)
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.title
 
@@ -24,7 +27,7 @@ class Day(models.Model):
         return self.day.isoformat()
 
 class Vote(models.Model):
-    #user = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     #activity = models.ForeignKey(Activity)
     #preference_value = models.IntegerField(default=1)
     will_go = models.BooleanField(default=True)
@@ -32,6 +35,7 @@ class Vote(models.Model):
     day = models.ForeignKey(Day)
     def __unicode__(self):  # Python 3: def __str__(self):
         return str(self.will_go)
+
 
 
 
