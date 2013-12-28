@@ -56,10 +56,4 @@ class Command(BaseCommand):
         '''
 
         # test for app_csp_formulation
-<<<<<<< HEAD
-        
-        formulate_app_csp(activities,days,votes)
-=======
-
         formulate_app_csp(activities,days,positiveVotes,negativeVotes,users)
->>>>>>> CSP
