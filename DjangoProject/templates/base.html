@@ -31,13 +31,16 @@
           <a class="navbar-brand" href="#">{% block navbar-brand %}Group 12 AI term project{% endblock %}</a>
         </div>
         <div class="navbar-collapse collapse">
-          <div class="form-group">
-            {% if user.is_authenticated %}
-              <p><a class="btn btn-warning navbar-right" href="{% url 'django.contrib.auth.views.logout' %}">Logout</a></p>
-            {% else %}
-              <p><a class="btn btn-success navbar-right" href="{% url 'django.contrib.auth.views.login' %}">Login or register</a></p>
-            {% endif %}
+          {% block user-form %}
+            <div class="form-group">
+              {% if user.is_authenticated %}
+                <p><a class="btn btn-warning navbar-right" href="{% url 'django.contrib.auth.views.logout' %}">Logout</a></p>
+              {% else %}
+                <p><a class="btn btn-success navbar-right" href="{% url 'django.contrib.auth.views.login' %}">Login</a></p>
+                <p><a class="btn btn-success navbar-right" href="{% url 'registration_register' %}">Register</a></p>
+              {% endif %}
             </div>
+          {% endblock user-form %}
         </div><!--/.navbar-collapse -->
       </div>
     </div>

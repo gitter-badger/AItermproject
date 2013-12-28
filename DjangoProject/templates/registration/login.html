@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+
+{% block jumbotron-maincontainer %}
+
+    {% if form.errors %}
+        <p class="text-danger">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form class="form" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <span class="text-danger">{{ field.errors }}</span>
+            <span class="text-primary">{{ field.label_tag }} {{ field }}</span>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Login" class="btn btn-success"/>
+        <input type="hidden" name="next" value="{% url 'events:index' %}" />
+    </form>
+
+
+
+{% endblock jumbotron-maincontainer %}

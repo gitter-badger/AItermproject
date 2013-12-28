@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block jumbotron-maincontainer %}
+
+    {% if form.errors %}
+        <h3 class="text-danger">
+            Errors in registration form
+        </h3>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <h3 class="text-danger">Please log out to register a new user</h3>
+        <p><a class="btn btn-warning navbar-right" href="{% url 'django.contrib.auth.views.logout' %}">Logout</a></p>
+    {% else %}
+        <form class="form" role="form" method="post" action="{% url 'registration_register' %}">
+        {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <span class="text-danger">{{ field.errors }}</span>
+                <span class="text-primary">{{ field.label_tag }} {{ field }}</span>
+            </div>
+            {% endfor %}
+            <input type="submit" value="Register" class="btn btn-success"/>
+        </form>
+    {% endif %}
+{% endblock jumbotron-maincontainer %}
