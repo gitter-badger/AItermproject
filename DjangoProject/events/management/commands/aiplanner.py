@@ -27,23 +27,20 @@ class Command(BaseCommand):
         #self.stdout.write('Successfully loaded event "%s"' % event)
 
         # loading all activities
-        activities = Activity.objects.all().filter(event=event)
-        
+        activities = list(Activity.objects.all().filter(event=event))
+
         # loading all days
         days = {}
-        for activity in activities:
-            days[activity] = Day.objects.all().filter(activity=activity)
-        
-        # loading all votes
         positiveVotes = {}
-        for day in days:
-            positiveVotes[day] = Vote.objects.all().filter(day=day,will_go=True)
-
         negativeVotes = {}
-        for day in days:
-            negativeVotes[day] = Vote.objects.all().filter(day=day,will_go=False)
+        for activity in activities:
+            temp_list_days = Day.objects.all().filter(activity=activity)
+            days[activity] = list(temp_list_days)
+            for day in temp_list_days:
+                positiveVotes[day] = list(Vote.objects.all().filter(day=day,will_go=True))
+                negativeVotes[day] = list(Vote.objects.all().filter(day=day,will_go=False))
 
-        users = User.objects.all()
+        users = list(User.objects.all())
 
         #now we have all activities with its days and votes loaded
         #code here
@@ -59,5 +56,5 @@ class Command(BaseCommand):
         '''
 
         # test for app_csp_formulation
-        
+
         formulate_app_csp(activities,days,positiveVotes,negativeVotes,users)

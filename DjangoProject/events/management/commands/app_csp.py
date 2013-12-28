@@ -8,11 +8,11 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 
 	vars = ['X_activity','X_day','X_attendees']
 
-	# create the domains 
+	# create the domains
 	domains = {}
 
 	# domain for X_activity is just the list of acitivities
-	domains['X_activity'] = activities
+	domains['X_activity'] = list(activities)
 
 	# domain for X_day
 	X_day_domain = set([])
@@ -29,13 +29,15 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 	neighbors['X_activity'] = ['X_day','X_attendees']
 	neighbors['X_day'] = ['X_activity','X_attendees']
 	neighbors['X_attendees'] = ['X_activity','X_day']
-	    
+
 	# the constraints
 
 	def constraints(A,a,B,b):
 		if activity_day_constraint(A,a,B,b):
 			return True
 		elif activity_attendees_constraint(A,a,B,b):
+			return True
+		elif day_attendees_constraint(A,a,B,b):
 			return True
 		else:
 			return False
@@ -90,10 +92,9 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 			return False
 
 		for attendee in attendees:
-			if not positiveVotes[day].Any(v.user == attendee):
+			if not any(v.user == attendee for v in positiveVotes[day]):
 				return False
 		return True
-
 
 	app_csp = CSP(vars,domains,neighbors,constraints)
 
@@ -102,9 +103,8 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 	app_csp.curr_domains = domains
 	AC3(app_csp)
 	app_csp.curr_domain = None
-	
-	print len(app_csp.domains['X_attendees'])
-	
 
-	#print min_conflicts(CSP(vars,domains,neighbors,constraints),1000)
-	
+	print len(app_csp.domains['X_attendees'])
+
+
+	print min_conflicts(CSP(vars,domains,neighbors,constraints),1000)
