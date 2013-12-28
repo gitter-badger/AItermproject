@@ -9,6 +9,8 @@ as commands
 
 from django.core.management.base import BaseCommand, CommandError
 from events.models import *
+from datetime import *
+from app_csp import*
 
 class Command(BaseCommand):
     args = '<event_id>'
@@ -23,10 +25,15 @@ class Command(BaseCommand):
 
         #self.stdout.write('Successfully loaded event "%s"' % event)
 
+        # loading all activities
         activities = Activity.objects.all().filter(event=event)
+        
+        # loading all days
         days = {}
         for activity in activities:
             days[activity] = Day.objects.all().filter(activity=activity)
+        
+        # loading all votes
         votes = {}
         for day in days:
             votes[day] = Vote.objects.all().filter(day=day)
@@ -34,7 +41,16 @@ class Command(BaseCommand):
         #now we have all activities with its days and votes loaded
         #code here
 
+        # test with datetime
+        '''
+        testday = datetime(2013, 12, 28, 10, 0, 0, 0,days[activities[0]][0].day.tzinfo)
 
+        day_set = set([testday])
 
+        print testday
+        print days[activities[0]][0].day in day_set
+        '''
 
-
+        # test for app_csp_formulation
+        
+        formulate_app_csp(activities,days,votes)
