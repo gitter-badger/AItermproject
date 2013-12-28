@@ -15,16 +15,16 @@ class Activity(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=2000)
     time_duration_hours = models.IntegerField(default=1)
-    min_atendees = models.IntegerField(default=0)
-    max_atendees = models.IntegerField(default=99)
+    min_attendees = models.IntegerField(default=0)
+    max_attendees = models.IntegerField(default=99)
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.title
 
 class Day(models.Model):
     activity = models.ForeignKey(Activity)
-    day = models.DateTimeField('day')
+    dateAndTime = models.DateTimeField('day')
     def __unicode__(self):  # Python 3: def __str__(self):
-        return self.day.isoformat()
+        return self.dateAndTime.isoformat()
 
 class Vote(models.Model):
     user = models.ForeignKey(User)

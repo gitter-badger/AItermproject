@@ -16,7 +16,7 @@
             <h4>Proposed days:</h4>
             {% for day in activity.day_set.all %}
               <div class="row">
-                <p>{{ day.day }}</p>
+                <p>{{ day.dateAndTime }}</p>
               </div>
             {% endfor%}
             <p><a class="btn btn-info btn-lg" role="button" href="{% url 'events:activitydetail' event.id activity.id %}">Vote your preferences &raquo;</a></p>

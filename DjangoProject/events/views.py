@@ -28,7 +28,7 @@ class ActivityDetailView(DetailView):
         daylist = Day.objects.filter(activity=self.object.id)
         fields = []
         for day in daylist:
-            fields.append({'name': str(day.id), 'label': day.day })
+            fields.append({'name': str(day.id), 'label': day.dateAndTime })
         context['voteform'] = MultiVoteForm(dynamic_fields=fields)
         return context
 
