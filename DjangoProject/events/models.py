@@ -34,7 +34,7 @@ class Vote(models.Model):
     #comment = models.CharField(max_length=2000)
     day = models.ForeignKey(Day)
     def __unicode__(self):  # Python 3: def __str__(self):
-        return str(self.will_go)
+        return str(self.will_go) +" by "+str(self.user)
 
 
 

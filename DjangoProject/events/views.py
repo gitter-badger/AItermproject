@@ -40,7 +40,12 @@ class ActivityDetailView(DetailView):
         for day in daylist:
             vote_value = int(request.POST[str(day.id)])
             if (vote_value == 1) or (vote_value == 0):
-                vote = Vote(day=day,will_go=bool(vote_value),user=self.request.user)
+                voteArray = Vote.objects.all().filter(user=self.request.user,day=day)
+                if not voteArray:
+                    vote = Vote(day=day,will_go=bool(vote_value),user=self.request.user)
+                else:
+                    vote=voteArray[0]
+                    vote.will_go = bool(vote_value)
                 vote.save()
         return redirect('events:detail',pk_event=event_id) # Redirect after POST
 
