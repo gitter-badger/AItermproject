@@ -4,6 +4,7 @@ from __future__ import generators
 from utils import *
 import search
 import types
+import pdb
 
 class CSP(search.Problem):
     """This class describes finite-domain Constraint Satisfaction Problems.
@@ -46,7 +47,7 @@ class CSP(search.Problem):
         update(self, vars=vars, domains=domains,
                neighbors=neighbors, constraints=constraints,
                initial={}, curr_domains=None, pruned=None, nassigns=0)
-        
+
     def assign(self, var, val, assignment):
         """Add {var: val} to assignment; Discard the old value if any.
         Do bookkeeping for curr_domains and nassigns."""
@@ -127,7 +128,7 @@ class CSP(search.Problem):
 
 #______________________________________________________________________________
 # CSP Backtracking Search
-                
+
 def backtracking_search(csp, mcv=False, lcv=False, fc=False, mac=False):
     """Set up to do recursive backtracking search. Allow the following options:
     mcv - If true, use Most Constrained Variable Heuristic
@@ -162,8 +163,8 @@ def recursive_backtracking(assignment, csp):
 
 def select_unassigned_variable(assignment, csp):
     "Select the variable to work on next.  Find"
-    if csp.mcv: # Most Constrained Variable 
-        unassigned = [v for v in csp.vars if v not in assignment] 
+    if csp.mcv: # Most Constrained Variable
+        unassigned = [v for v in csp.vars if v not in assignment]
         return argmin_random_tie(unassigned,
                      lambda var: -num_legal_values(csp, var, assignment))
     else: # First unassigned variable
@@ -218,7 +219,7 @@ def remove_inconsistent_values(csp, Xi, Xj):
 #______________________________________________________________________________
 # Min-conflicts hillclimbing search for CSPs
 
-def min_conflicts(csp, max_steps=1000000): 
+def min_conflicts(csp, max_steps=1000000):
     """Solve a CSP by stochastic hillclimbing on the number of conflicts."""
     # Generate a complete assignement for all vars (probably with conflicts)
     current = {}; csp.current = current
@@ -239,7 +240,7 @@ def min_conflicts_value(csp, var, current):
     """Return the value that will give var the least number of conflicts.
     If there is a tie, choose at random."""
     return argmin_random_tie(csp.domains[var],
-                             lambda val: csp.nconflicts(var, val, current)) 
+                             lambda val: csp.nconflicts(var, val, current))
 
 #______________________________________________________________________________
 # Map-Coloring Problems
@@ -266,7 +267,7 @@ def MapColoringCSP(colors, neighbors):
     specified as a string of the form defined by parse_neighbors"""
 
     if isinstance(neighbors, str):
-        neighbors = parse_neighbors(neighbors)     
+        neighbors = parse_neighbors(neighbors)
     return CSP(neighbors.keys(), UniversalDict(colors), neighbors,
                different_values_constraint)
 
@@ -292,7 +293,7 @@ def parse_neighbors(neighbors, vars=[]):
 
 australia = MapColoringCSP(list('RGB'),
                            'SA: WA NT Q NSW V; NT: WA Q; NSW: Q V; T: ')
-    
+
 usa = MapColoringCSP(list('RGBY'),
         """WA: OR ID; OR: ID NV CA; CA: NV AZ; NV: ID UT AZ; ID: MT WY UT;
         UT: WY CO AZ; MT: ND SD WY; WY: SD NE CO; CO: NE KA OK NM; NM: OK TX;
@@ -338,7 +339,7 @@ class NQueensCSP(CSP):
                      UniversalDict(range(n)), queen_constraint)
         update(self, rows=[0]*n, ups=[0]*(2*n - 1), downs=[0]*(2*n - 1))
 
-    def nconflicts(self, var, val, assignment): 
+    def nconflicts(self, var, val, assignment):
         """The number of conflicts, as recorded with each assignment.
         Count conflicts in row and in up, down diagonals. If there
         is a queen there, it can't conflict with itself, so subtract 3."""
@@ -362,7 +363,7 @@ class NQueensCSP(CSP):
         if var in assignment:
             self.record_conflict(assignment, var, assignment[var], -1)
         CSP.unassign(self, var, assignment)
-        
+
     def record_conflict(self, assignment, var, val, delta):
         "Record conflicts caused by addition or deletion of a Queen."
         n = len(self.vars)
@@ -383,8 +384,8 @@ class NQueensCSP(CSP):
             for var in range(n):
                 if assignment.get(var,'') == val: ch ='*'
                 else: ch = ' '
-                print str(self.nconflicts(var, val, assignment))+ch, 
-            print        
+                print str(self.nconflicts(var, val, assignment))+ch,
+            print
 
 #______________________________________________________________________________
 # The Zebra Puzzle
@@ -433,7 +434,7 @@ def Zebra():
             (A in Pets and B in Pets) or
             (A in Drinks and B in Drinks) or
             (A in Countries and B in Countries) or
-            (A in Smokes and B in Smokes)): return not same        
+            (A in Smokes and B in Smokes)): return not same
         raise 'error'
     return CSP(vars, domains, neighbors, zebra_constraint)
 
