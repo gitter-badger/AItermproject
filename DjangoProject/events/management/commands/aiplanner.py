@@ -8,6 +8,7 @@ as commands
 '''
 
 from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import User
 from events.models import *
 from datetime import *
 from app_csp import*
@@ -34,9 +35,15 @@ class Command(BaseCommand):
             days[activity] = Day.objects.all().filter(activity=activity)
         
         # loading all votes
-        votes = {}
+        positiveVotes = {}
         for day in days:
-            votes[day] = Vote.objects.all().filter(day=day)
+            positiveVotes[day] = Vote.objects.all().filter(day=day,will_go=True)
+
+        negativeVotes = {}
+        for day in days:
+            negativeVotes[day] = Vote.objects.all().filter(day=day,will_go=False)
+
+        users = User.objects.all()
 
         #now we have all activities with its days and votes loaded
         #code here
@@ -51,11 +58,6 @@ class Command(BaseCommand):
         print days[activities[0]][0].day in day_set
         '''
 
-<<<<<<< HEAD
-
-
-=======
         # test for app_csp_formulation
         
-        formulate_app_csp(activities,days,votes)
->>>>>>> CSP
+        formulate_app_csp(activities,days,positiveVotes,negativeVotes,users)
