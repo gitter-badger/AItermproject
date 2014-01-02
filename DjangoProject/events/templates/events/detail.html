@@ -3,21 +3,19 @@
 
 {% block jumbotron-top %}
     <h1>{{ event.title }}</h1>
-    <p>{{ event.comment }}</p>
+    <p class="">{{ event.comment }}</p>
 {% endblock jumbotron-top %}
 
 {% block jumbotron-maincontainer %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    <div class="row">
+    <div class="row ">
       {% for activity in event.activity_set.all %}
-          <div class="col-md-4">
+          <div class="col-md-4 ">
             <h2>{{activity.title}}</h2>
-            <p>{{ activity.description}}</p>
-            <h4>Proposed days:</h4>
+            <p class="lead">{{ activity.description}}</p>
+            <strong>Proposed days</strong>
             {% for day in activity.day_set.all %}
-              <div class="row">
-                <p>{{ day.dateAndTime }}</p>
-              </div>
+                <p class="text-success">{{ day.dateAndTime }}</p>
             {% endfor%}
             <p><a class="btn btn-info btn-lg" role="button" href="{% url 'events:activitydetail' event.id activity.id %}">Vote your preferences &raquo;</a></p>
           </div>
