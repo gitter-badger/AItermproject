@@ -1,12 +1,10 @@
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 
 from registration import signals
 from registration.views import RegistrationView as BaseRegistrationView
-
-import pdb
 
 class RegistrationView(BaseRegistrationView):
     """
@@ -21,10 +19,14 @@ class RegistrationView(BaseRegistrationView):
         User.objects.create_user(username, email, password)
 
         new_user = authenticate(username=username, password=password)
+        new_user.is_staff = True
+        new_user.save()
         login(request, new_user)
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)
+        g = Group.objects.get(name='Hosts')
+        g.user_set.add(new_user)
         return new_user
 
     def registration_allowed(self, request):
