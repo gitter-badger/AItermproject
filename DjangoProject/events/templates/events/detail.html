@@ -4,6 +4,9 @@
 {% block jumbotron-top %}
     <h1>{{ event.title }}</h1>
     <p class="">{{ event.comment }}</p>
+    <p>
+      <a class="btn btn-success btn-lg" role="button" href="{% url 'events:result' event.id %}">Find the best plan! &raquo;</a>
+    </p>
 {% endblock jumbotron-top %}
 
 {% block jumbotron-maincontainer %}

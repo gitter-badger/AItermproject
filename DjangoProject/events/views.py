@@ -1,9 +1,9 @@
-from django.shortcuts import get_object_or_404, render, redirect, render_to_response
-from django.views.generic import ListView,DetailView,CreateView
-from django.views.generic.detail import SingleObjectMixin
+from django.shortcuts import redirect
+from django.views.generic import ListView,DetailView
 from events.models import *
 from events.forms import *
-import pdb
+from django.core import management
+
 
 class IndexView(ListView):
     template_name = 'events/index.html'
@@ -15,6 +15,17 @@ class EventDetail(DetailView):
     model = Event
     template_name = 'events/detail.html'
 
+class EventCSPResultDetail(DetailView):
+    pk_url_kwarg = 'pk_event' #I find more clear to use this name than only pk
+    model = Event
+    template_name = 'events/CSPresult.html'
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(EventCSPResultDetail, self).get_context_data(**kwargs)
+        #solve the event
+        #management.call_command('flush', verbosity=0, interactive=False)
+        #context['TODO'] = ""
+        return context
 
 class ActivityDetailView(DetailView):
     model = Activity

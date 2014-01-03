@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block jumbotron-top %}
+    <h1>{{ event.title }}</h1>
+    <p class="lead">Enjoy it!</p>
+{% endblock jumbotron-top %}
+
+{% block jumbotron-maincontainer %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <div class="row ">
+
+    </div>
+{% endblock jumbotron-maincontainer %}
