@@ -49,26 +49,3 @@ class ActivityDetailView(DetailView):
                 vote.save()
         return redirect('events:detail',pk_event=event_id) # Redirect after POST
 
-
-class EventCreate(CreateView):
-    model = Event
-    template_name = 'events/create.html'
-    form_class = EventForm
-
-    def post(self, request, *args, **kwargs):
-        eform = EventForm(request.POST, instance=Event())
-        aforms = [ActivityForm(request.POST, prefix=str(x), instance=Activity()) for x in range(0,3)]
-        if eform.is_valid() and all([af.is_valid() for af in aforms]):
-            new_event = eform.save()
-            for af in aforms:
-                new_activity = af.save(commit=False)
-                new_activity.event = new_event
-                new_activity.save()
-            return HttpResponseRedirect('/events/add/')
-        return render_to_response(self.template_name, {'event_form': eform, 'activity_forms': aforms})
-    def get(self, request, *args, **kwargs):
-        eform = EventForm(instance=Event())
-        aforms = [ActivityForm(prefix=str(x), instance=Activity()) for x in range(0,3)]
-        return render_to_response(self.template_name, {'event_form': eform, 'activity_forms': aforms})
-
-

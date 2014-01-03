@@ -19,12 +19,3 @@ class MultiVoteForm(Form):
                 required=True,
                 initial=VOTING_CHOICES[2][0],
                 widget=RadioSelect(renderer=RadioCustomRenderer,attrs={'class': 'Your name',}))
-
-class EventForm(ModelForm):
-   class Meta:
-        model = Event
-
-class ActivityForm(ModelForm):
-    class Meta:
-        model = Activity
-        exclude = ('event',)

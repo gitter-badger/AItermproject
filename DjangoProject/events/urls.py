@@ -5,7 +5,6 @@ from events import views
 urlpatterns = patterns('',
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^(?P<pk_event>\d+)/$', views.EventDetail.as_view(), name='detail'),
-    url(r'^create/$', views.EventCreate.as_view(), name='create'),
     url(r'^(?P<pk_event>\d+)/activity/(?P<pk_activity>\d+)/$', views.ActivityDetailView.as_view(), name='activitydetail'),
 )
 #url(r'^(?P<pk_event>\d+)/activity/$', views.ActivityIndexView.as_view(), name='activityindex'),
