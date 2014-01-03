@@ -21,9 +21,8 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 	domains['X_day'] = list(X_day_domain)
 
 	# domain for X_attendees
-	powerset = lambda S: list(chain(*[combinations(S, ni) for ni in range(len(S)+1)]))
+	powerset = lambda S: list(chain(*[combinations(S, ni) for ni in reversed(range(len(S)+1))]))
 	domains['X_attendees'] = powerset(users)
-
 
 	neighbors = {}
 	neighbors['X_activity'] = ['X_day','X_attendees']
@@ -99,13 +98,55 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 
 	app_csp = CSP(vars,domains,neighbors,constraints)
 
-	print len(app_csp.domains['X_attendees'])
+	#print len(app_csp.domains['X_attendees'])
 
 	app_csp.curr_domains = domains
 	AC3(app_csp)
-	app_csp.curr_domain = None
+	print("AC3 done")
+	#app_csp.curr_domain = None
 
-	print len(app_csp.domains['X_attendees'])
+	#print len(app_csp.domains['X_attendees'])
 
-
-	print min_conflicts(CSP(vars,domains,neighbors,constraints),1000)
+	#Define the goal
+	goal = 0
+	for attendee in app_csp.domains['X_attendees']:
+		if len(attendee) > goal:
+			goal = len(attendee)
+	#Evaluation funcion
+	def eval(solution):
+		if not solution:
+			return -1
+		return len(solution[2])#attendees lenght
+	#Solution check function
+	def valid(solution):
+		if activity_day_constraint('X_activity',solution[0],'X_day',solution[1]):
+			return True
+		elif activity_attendees_constraint('X_attendees',solution[2],'X_activity',solution[0]):
+			return True
+		elif day_attendees_constraint('X_attendees',solution[2],'X_day',solution[1]):
+			return True
+		else:
+			return False
+	#Search the solution BFS
+	current_solution = None
+	flag = False
+	for act in app_csp.domains['X_activity']:
+		for day in app_csp.domains['X_day']:
+			for att in  app_csp.domains['X_attendees']:
+				solution = (act,day,att)
+				#check if the solution is beter than the current one
+				if eval(solution) < eval(current_solution):
+					continue
+				#check if is an actual solution
+				if valid(solution):
+					current_solution=solution
+					#if we reached the goal no more search
+					if eval(solution) >= goal:
+						flag = True
+						break
+			if flag:
+				break
+		if flag:
+			break
+	print("Search done")
+	print (solution)
