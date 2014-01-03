@@ -2,7 +2,8 @@ from django.shortcuts import redirect
 from django.views.generic import ListView,DetailView
 from events.models import *
 from events.forms import *
-from django.core import management
+from events.management.commands.app_csp import *
+import pdb
 
 
 class IndexView(ListView):
@@ -23,8 +24,9 @@ class EventCSPResultDetail(DetailView):
         # Call the base implementation first to get a context
         context = super(EventCSPResultDetail, self).get_context_data(**kwargs)
         #solve the event
-        #management.call_command('flush', verbosity=0, interactive=False)
-        #context['TODO'] = ""
+        event = Event.objects.get(pk=self.object.id)
+        context['solution'] = formulate_app_csp(event)
+        #pdb.set_trace()
         return context
 
 class ActivityDetailView(DetailView):

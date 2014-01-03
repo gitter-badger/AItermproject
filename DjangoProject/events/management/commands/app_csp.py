@@ -1,12 +1,29 @@
 # formulate the anti party pooper CSP
 
 from csp import *
+from events.models import *
 from itertools import combinations, chain
+from django.contrib.auth.models import User
 
 
-def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
+def formulate_app_csp(event):
+	# loading all activities
+	activities = list(Activity.objects.all().filter(event=event))
 
-	vars = ['X_activity','X_day','X_attendees']
+	# loading all days
+	days = {}
+	positiveVotes = {}
+	negativeVotes = {}
+	for activity in activities:
+	    temp_list_days = Day.objects.all().filter(activity=activity)
+	    days[activity] = list(temp_list_days)
+	    for day in temp_list_days:
+	        positiveVotes[day] = list(Vote.objects.all().filter(day=day,will_go=True))
+	        negativeVotes[day] = list(Vote.objects.all().filter(day=day,will_go=False))
+
+	users = list(User.objects.all())
+	#now we have all activities with its days and votes loaded
+	variables = ['X_activity','X_day','X_attendees']
 
 	# create the domains
 	domains = {}
@@ -96,7 +113,7 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 				return False
 		return True
 
-	app_csp = CSP(vars,domains,neighbors,constraints)
+	app_csp = CSP(variables,domains,neighbors,constraints)
 
 	#print len(app_csp.domains['X_attendees'])
 
@@ -150,3 +167,4 @@ def formulate_app_csp(activities,days,positiveVotes,negativeVotes,users):
 			break
 	print("Search done")
 	print (solution)
+	return solution
