@@ -9,6 +9,11 @@
 {% block jumbotron-maincontainer %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <div class="row ">
-      {{solution}}
+      <h2>Activity:</h2><p class="lead">{{solution.0}}</p>
+      <h2>Day:</h2><p class="lead">{{solution.1}}</p>
+      <h2>Attendees:</h2>
+      {% for user in solution.2 %}
+        <p class="lead">{{user}}</p>
+      {% endfor%}
     </div>
 {% endblock jumbotron-maincontainer %}
